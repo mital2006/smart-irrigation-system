@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Irrigation System | IoT Dashboard & Consultation</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts: Inter for UI, JetBrains Mono for telemetry -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Top Navigation Header -->
+    <header class="top-navbar">
+      <div class="nav-brand">
+        <div class="brand-logo">
+          <!-- Leaf & Water Droplet SVG -->
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+            <path d="M12 22.5c2.5-2.5 5-5.5 5-9.5a5 5 0 0 0-10 0c0 4 2.5 7 5 9.5z" opacity="0.3"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">Smart Irrigation System</h1>
+          <p class="brand-tagline">IoT Micro-Agri Soil Telemetry &bull; Demonstration Build</p>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#dashboard" class="nav-link active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+          </svg>
+          Telemetry Dashboard
+        </a>
+        <a href="#simulation-controls" class="nav-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          Sensor Simulator
+        </a>
+        <a href="#consultation" class="nav-link nav-consultation">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Project Consultation
+          <span class="badge-pending">Incomplete</span>
+        </a>
+      </nav>
+
+      <div class="nav-status-badge">
+        <span class="status-dot-simulated"></span>
+        <span>Sensor: Simulated Mode</span>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Hardware Disclaimer Alert (Explicit Honesty Requirement) -->
+      <div class="disclaimer-banner">
+        <div class="disclaimer-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+        </div>
+        <div class="disclaimer-text">
+          <strong>Hardware Demonstration Notice:</strong> Real physical sensors (ESP32 / Arduino / capacitive soil probes) are <strong>NOT connected</strong> in this demonstration. All sensor inputs, moisture readings, and pump states are dynamically simulated in software.
+        </div>
+      </div>
+
+      <!-- Critical Low Moisture Warning Banner (Dynamically Shown/Hidden) -->
+      <div class="alert-banner alert-danger" id="lowMoistureAlert" style="display: none;">
+        <div class="alert-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </div>
+        <div class="alert-body">
+          <h4 class="alert-title">CRITICAL ALERT: Low Soil Moisture Detected!</h4>
+          <p class="alert-message" id="lowMoistureMessage">
+            Soil moisture is at <strong id="alertMoistureVal">22%</strong> (below the minimum 30% hydration threshold). The soil is dry and plant roots are experiencing acute water stress. Immediate irrigation recommended!
+          </p>
+        </div>
+        <button class="btn btn-sm btn-alert-action" id="triggerEmergencyWaterBtn">
+          Turn Pump ON (Simulated)
+        </button>
+      </div>
+
+      <!-- Metrics & Status Dashboard Grid -->
+      <section class="dashboard-grid" id="dashboard">
+        <!-- Card 1: Soil Moisture -->
+        <div class="stat-card stat-moisture">
+          <div class="stat-header">
+            <div class="stat-icon-wrapper moisture-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+              </svg>
+            </div>
+            <span class="stat-tag tag-simulated">SIMULATED FEED</span>
+          </div>
+          <div class="stat-body">
+            <span class="stat-label">Soil Moisture Content</span>
+            <div class="stat-value-group">
+              <span class="stat-numeric" id="displayMoistureVal">45</span>
+              <span class="stat-unit">%</span>
+            </div>
+            <div class="moisture-meter">
+              <div class="moisture-meter-fill" id="moistureBarFill" style="width: 45%;"></div>
+            </div>
+            <div class="meter-labels">
+              <span>0% Dry</span>
+              <span class="threshold-marker">30% Threshold</span>
+              <span>100% Saturated</span>
+            </div>
+          </div>
+          <div class="stat-footer">
+            <span class="sensor-model">Sensor: Capacitive Probe v1.2</span>
+            <span class="stat-status-badge" id="moistureCategoryBadge">Adequate</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Water Pump Actuator Status -->
+        <div class="stat-card stat-pump" id="pumpCard">
+          <div class="stat-header">
+            <div class="stat-icon-wrapper pump-icon" id="pumpIconWrapper">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polygon points="10 8 16 12 10 16 10 8"></polygon>
+              </svg>
+            </div>
+            <span class="stat-tag tag-actuator">5V RELAY ACTUATOR</span>
+          </div>
+          <div class="stat-body">
+            <span class="stat-label">Water Pump State</span>
+            <div class="pump-state-indicator">
+              <div class="pump-pill" id="pumpPill">
+                <span class="pump-pulse-dot" id="pumpPulseDot"></span>
+                <span class="pump-status-text" id="pumpStatusText">PUMP OFF</span>
+              </div>
+            </div>
+            <p class="pump-subtext" id="pumpSubtext">Motor idle &bull; No active water delivery</p>
+          </div>
+          <div class="stat-footer pump-control-footer">
+            <button class="btn btn-toggle-pump" id="manualPumpToggleBtn">
+              Toggle Pump (Manual Simulation)
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3: Plant Condition -->
+        <div class="stat-card stat-plant" id="plantCard">
+          <div class="stat-header">
+            <div class="stat-icon-wrapper plant-icon">
+              <!-- Sprout / Plant Icon -->
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 20h10"></path>
+                <path d="M10 20c0-5 3-7 5-11"></path>
+                <path d="M15 9c-3 0-5 3-5 5"></path>
+                <path d="M14 9c0-3 3-5 5-5 0 3-2 5-5 5z"></path>
+                <path d="M10 14c0-3-3-5-5-5 0 3 2 5 5 5z"></path>
+              </svg>
+            </div>
+            <span class="stat-tag tag-botanical">SPECIES: MONSTERA</span>
+          </div>
+          <div class="stat-body">
+            <span class="stat-label">Plant Condition</span>
+            <div class="plant-status-title" id="plantStatusTitle">Healthy &amp; Hydrated</div>
+            <p class="plant-status-desc" id="plantStatusDesc">
+              Root moisture is in the optimal range (40% - 70%). Transpiration and nutrient absorption are nominal.
+            </p>
+          </div>
+          <div class="stat-footer">
+            <span class="botanical-tip" id="plantActionTip">&check; No watering required at this time</span>
+          </div>
+        </div>
+
+        <!-- Card 4: Environmental Context (IoT Telemetry) -->
+        <div class="stat-card stat-environment">
+          <div class="stat-header">
+            <div class="stat-icon-wrapper env-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path>
+              </svg>
+            </div>
+            <span class="stat-tag tag-microclimate">DHT22 TELEMETRY</span>
+          </div>
+          <div class="stat-body">
+            <span class="stat-label">Ambient Microclimate</span>
+            <div class="env-metrics-grid">
+              <div class="env-item">
+                <span class="env-item-label">Air Temp:</span>
+                <span class="env-item-val" id="envTemp">26.5 &deg;C</span>
+              </div>
+              <div class="env-item">
+                <span class="env-item-label">Air Humidity:</span>
+                <span class="env-item-val" id="envHumidity">58 %</span>
+              </div>
+              <div class="env-item">
+                <span class="env-item-label">Auto-Irrigation:</span>
+                <span class="env-item-val text-warning">Pending Code</span>
+              </div>
+              <div class="env-item">
+                <span class="env-item-label">Hardware Link:</span>
+                <span class="env-item-val text-danger">Offline</span>
+              </div>
+            </div>
+          </div>
+          <div class="stat-footer">
+            <small class="text-muted">Target soil moisture threshold: 30%</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Soil Moisture Simulation Control Panel -->
+      <section class="simulation-section" id="simulation-controls">
+        <div class="card sim-card">
+          <div class="card-header">
+            <div class="header-title-group">
+              <div class="header-icon-bubble">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="4" y1="21" x2="4" y2="14"></line>
+                  <line x1="4" y1="10" x2="4" y2="3"></line>
+                  <line x1="12" y1="21" x2="12" y2="12"></line>
+                  <line x1="12" y1="8" x2="12" y2="3"></line>
+                  <line x1="20" y1="21" x2="20" y2="16"></line>
+                  <line x1="20" y1="12" x2="20" y2="3"></line>
+                  <line x1="1" y1="14" x2="7" y2="14"></line>
+                  <line x1="9" y1="8" x2="15" y2="8"></line>
+                  <line x1="17" y1="16" x2="23" y2="16"></line>
+                </svg>
+              </div>
+              <div>
+                <h2 class="card-title">Soil Moisture Simulation Controller</h2>
+                <p class="card-subtitle">Manually test system dynamics, low-moisture alerts, and plant status transitions</p>
+              </div>
+            </div>
+            <span class="badge-live-sim">Interactive Sandbox</span>
+          </div>
+
+          <div class="sim-card-body">
+            <div class="slider-container">
+              <div class="slider-header">
+                <label for="moistureSlider" class="slider-label">Adjust Simulated Soil Moisture Percentage:</label>
+                <div class="slider-value-badge">
+                  <span id="sliderValueDisplay">45</span>%
+                </div>
+              </div>
+              <input 
+                type="range" 
+                id="moistureSlider" 
+                min="0" 
+                max="100" 
+                value="45" 
+                class="moisture-range-input"
+              />
+              <div class="slider-ticks">
+                <span class="tick-label text-danger">0% (Extremely Dry)</span>
+                <span class="tick-label text-warning">30% (Trigger Point)</span>
+                <span class="tick-label text-success">60% (Optimal)</span>
+                <span class="tick-label text-primary">100% (Saturated)</span>
+              </div>
+            </div>
+
+            <!-- Quick Presets -->
+            <div class="preset-buttons-group">
+              <span class="preset-label">Quick Scenario Presets:</span>
+              <button class="btn btn-preset btn-preset-danger" data-val="15">
+                Critical Drought (15%)
+              </button>
+              <button class="btn btn-preset btn-preset-warning" data-val="28">
+                Low Moisture Alert (28%)
+              </button>
+              <button class="btn btn-preset btn-preset-success" data-val="55">
+                Optimal Hydration (55%)
+              </button>
+              <button class="btn btn-preset btn-preset-info" data-val="88">
+                Over-Saturated Soil (88%)
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Project Consultation & Incomplete Status Page / Section -->
+      <section class="consultation-section" id="consultation">
+        <div class="card consultation-card">
+          <!-- Consultation Card Header -->
+          <div class="consultation-card-header">
+            <div class="consultation-title-group">
+              <div class="consultation-badges">
+                <span class="badge-consultation badge-status-incomplete">
+                  <span class="pulse-indicator"></span>
+                  Status: Incomplete
+                </span>
+                <span class="badge-consultation badge-priority-medium">
+                  Priority: Medium
+                </span>
+                <span class="badge-consultation badge-progress" id="progressPill">
+                  Progress: 40%
+                </span>
+              </div>
+              <h2 class="consultation-main-title">Project Consultation &amp; Engineering Roadmap</h2>
+              <p class="consultation-lead">
+                This project is an <strong>intentionally INCOMPLETE prototype</strong> created for software error consultation, design verification, and stage-gate engineering reviews.
+              </p>
+            </div>
+          </div>
+
+          <!-- Progress Overview Bar -->
+          <div class="progress-section">
+            <div class="progress-header">
+              <div class="progress-info">
+                <span class="progress-title">Overall Development Progress</span>
+                <span class="progress-count" id="taskCompletionCount">3 of 7 tasks completed</span>
+              </div>
+              <div class="progress-percentage" id="progressPercentageText">40%</div>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="checklistProgressBar" style="width: 40%;"></div>
+            </div>
+          </div>
+
+          <!-- Project Consultation Details & Task Checklist -->
+          <div class="consultation-body">
+            <div class="consultation-grid">
+              
+              <!-- Completed Tasks Column -->
+              <div class="task-column completed-column">
+                <div class="column-header">
+                  <div class="column-icon icon-check">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                      <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="column-title">Completed Milestones</h3>
+                    <p class="column-subtitle">Phases verified and operating in this web build</p>
+                  </div>
+                </div>
+
+                <div class="tasks-list" id="completedTasksList">
+                  <label class="task-item is-completed">
+                    <input type="checkbox" class="task-checkbox" checked data-task-id="t1">
+                    <span class="custom-check"></span>
+                    <div class="task-content">
+                      <strong>Dashboard UI</strong>
+                      <p>Modern responsive green-and-white dashboard featuring metric cards and telemetry gauges.</p>
+                    </div>
+                  </label>
+
+                  <label class="task-item is-completed">
+                    <input type="checkbox" class="task-checkbox" checked data-task-id="t2">
+                    <span class="custom-check"></span>
+                    <div class="task-content">
+                      <strong>Soil Moisture Display</strong>
+                      <p>Real-time visual telemetry, dynamic threshold warning alerts, and condition mapping.</p>
+                    </div>
+                  </label>
+
+                  <label class="task-item is-completed">
+                    <input type="checkbox" class="task-checkbox" checked data-task-id="t3">
+                    <span class="custom-check"></span>
+                    <div class="task-content">
+                      <strong>Basic Project Information</strong>
+                      <p>Project documentation, architectural specifications, and simulation controllers.</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Pending Tasks Column -->
+              <div class="task-column pending-column">
+                <div class="column-header">
+                  <div class="column-icon icon-pending">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="column-title">Pending Tasks (Incomplete Scope)</h3>
+                    <p class="column-subtitle">Required for real-world physical deployment</p>
+                  </div>
+                </div>
+
+                <div class="tasks-list" id="pendingTasksList">
+                  <label class="task-item">
+                    <input type="checkbox" class="task-checkbox" data-task-id="t4">
+                    <span class="custom-check"></span>
+                    <div class="task-content">
+                      <strong>Connect a Real Soil Moisture Sensor</strong>
+                      <p class="task-note-warning">&cross; Pending physical analog wiring of Capacitive Probe to ADC pin A0 / GPIO 34.</p>
+                    </div>
+                  </label>
+
+                  <label class="task-item">
+                    <input type="checkbox" class="task-checkbox" data-task-id="t5">
+                    <span class="custom-check"></span>
+                    <div class="task-content">
+                      <strong>Implement Automatic Pump Control</strong>
+                      <p class="task-note-warning">&cross; Pending embedded firmware closed-loop hysteresis (auto-turn on when &lt; 30%, auto-off when &gt; 65%).</p>
+                    </div>
+                  </label>
+
+                  <label class="task-item">
+                    <input type="checkbox" class="task-checkbox" data-task-id="t6">
+                    <span class="custom-check"></span>
+                    <div class="task-content">
+                      <strong>Hardware Integration with ESP32 or Arduino</strong>
+                      <p class="task-note-warning">&cross; Pending microcontroller flashing, WiFi/MQTT telemetry bridge, and WebSocket transport layer.</p>
+                    </div>
+                  </label>
+
+                  <label class="task-item">
+                    <input type="checkbox" class="task-checkbox" data-task-id="t7">
+                    <span class="custom-check"></span>
+                    <div class="task-content">
+                      <strong>Perform Final Testing</strong>
+                      <p class="task-note-warning">&cross; Pending wet/dry soil calibration cycles, soak tests, and electrical isolation verification.</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Consultation Technical Notes & Hardware Plan -->
+            <div class="consultation-notes-box">
+              <h4>Consultation Assessment &amp; Engineering Recommendations</h4>
+              <div class="notes-grid">
+                <div class="note-card">
+                  <span class="note-badge">Hardware Spec</span>
+                  <h5>Target Controller</h5>
+                  <p>ESP32 NodeMCU or Arduino Uno R3 with 5V DC relay module and submersible water pump (3V-6V).</p>
+                </div>
+                <div class="note-card">
+                  <span class="note-badge">Sensor Selection</span>
+                  <h5>Capacitive vs. Resistive</h5>
+                  <p>Recommend Capacitive v1.2 probes over resistive forks to eliminate probe corrosion from electrolysis.</p>
+                </div>
+                <div class="note-card">
+                  <span class="note-badge">Hysteresis Logic</span>
+                  <h5>Debounced Control</h5>
+                  <p>Avoid rapid relay chatter by introducing a 5-minute cooldown timer between pumping intervals.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-container">
+        <p>&copy; 2026 Smart Irrigation System &bull; IoT Demonstration Project</p>
+        <p class="footer-subtext">Clean Green &amp; White Architecture &bull; Explicitly Simulated Telemetry &bull; Intentionally Incomplete for Demonstration</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
